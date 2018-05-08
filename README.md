@@ -17,10 +17,9 @@ Ubuntu安装Geth：https://github.com/ethereum/go-ethereum/wiki/Installation-Ins
 
 ##  多节点搭建 
 前置：
-	1. 创建一个新账户：
-	`geth --datadir=/opt/geth-chain/data/00 account new`
-	2. 初始化创世区块：
-	  创建genesis.json
+1. 创建一个新账户：`geth --datadir=/opt/geth-chain/data/00 account new`
+2. 初始化创世区块：
+创建genesis.json
 	`{
 　　"config":{
 　　　　"chainId":123456,
@@ -38,20 +37,20 @@ Ubuntu安装Geth：https://github.com/ethereum/go-ethereum/wiki/Installation-Ins
 　　"parentHash":"0x0000000000000000000000000000000000000000000000000000000000000000",
 　　"timestamp":"0x00"
 }`
-	3. 目录:
-	    `Geth目录：/opt/geth-1.8.2
-        区块目录：/opt/geth-chain/data`
+3. 目录: 
+Geth目录：/opt/geth-1.8.2
+区块目录：/opt/geth-chain/data
 
 ### 方式1,
-    注：目前有问题，节点未加入同一个网络
-	1. 多节点搭建：
-	   采用开源shell脚本：https://github.com/ethersphere/eth-utils，脚本与最新Geth版本不兼容，需修改。
-	2. 命令参考：
-        -- start the cluster & the signle node
-	    GETH=./geth bash gethcluster.sh ~/geth-chain/data 5565 3 05 172.16.0.13 -mine
-	    GETH=./geth bash gethup.sh ~/geth-chain/data 04 09 --mine console
-	3. IPC endpoint: url=/root/geth-chain/chain/5565/data/00/geth.ipc
-	    可通过命令连接Console：./geth attach /root/geth-chain/chain/5565/data/00/geth.ipc
+注：目前有问题，节点未加入同一个网络
+1. 多节点搭建：
+采用开源shell脚本：https://github.com/ethersphere/eth-utils，脚本与最新Geth版本不兼容，需修改。
+2. 命令参考：
+    -- start the cluster & the signle node
+	 GETH=geth bash gethcluster.sh ~/geth-chain/data 5565 3 05 172.16.0.13 -mine
+	 GETH=geth bash gethup.sh ~/geth-chain/data 04 09 --mine console
+3. IPC endpoint: url=/root/geth-chain/chain/5565/data/00/geth.ipc
+   可通过命令连接Console：geth attach /root/geth-chain/chain/5565/data/00/geth.ipc
 
 
 ### 方式2, bootnode方式
@@ -79,34 +78,31 @@ Reference:
  1. [Management-APIs][1]
  2. [JSON-RPC API][2]
 
-List all Accounts: `eth.accounts`
-Create new Account: `personal.newAcccount("pwd")`
-Unlock one Account: `personal.unlockAccount(eth.accounts[0],"pwd")`
-View the Balance: `eth.getBalance(eth.accounts[0])`
+- List all Accounts: `eth.accounts`
+- Create new Account: `personal.newAcccount("pwd")`
+- Unlock one Account: `personal.unlockAccount(eth.accounts[0],"pwd")`
+- View the Balance: `eth.getBalance(eth.accounts[0])`
+- View Default Miner Account: `eth.coinbase`
+- Change the BaseMiner Account: `miner.setEtherbase(eth.accounts[1])`
+- Start/Stop to Mine: `miner.start(1)/miner.stop()`
 
-View Default Miner Account: `eth.coinbase`
-Change the BaseMiner Account: `miner.setEtherbase(eth.accounts[1])`
-Start/Stop to Mine: `miner.start(1)/miner.stop()`
-
-admin
-节点加入网络:admin.addPeer("enode://03f411e46212e00fb3824db08e1df03715bab0908a1f129367bba8564e728dfcd4581c90b0acc5b9ee7e8f3c47ada524a18b76bd117ef30aaa4dcab2faea80c2@[IP]:30303")
+- admin节点加入网络:
+`admin.addPeer("enode://03f411e46212e00fb3824db08e1df03715bab0908a1f129367bba8564e728dfcd4581c90b0acc5b9ee7e8f3c47ada524a18b76bd117ef30aaa4dcab2faea80c2@[IP]:30303")`
 
 
-List the BlockNum: `eth.blockNumber`
-View the Block info: `eth.getBlock(1)`
+- List the BlockNum: `eth.blockNumber`
+- View the Block info: `eth.getBlock(1)`
 
-Send a new Transcation: `eth.sendTransaction({from: eth.accounts[0], to:eth.accounts[1], value: web3.toWei(1, "ether")})`
-List the Pending Transcation：`eth.pendingTransactions`
-View the Transcation: `eth.getTransaction(tranId)`
+- Send a new Transcation: `eth.sendTransaction({from: eth.accounts[0], to:eth.accounts[1], value: web3.toWei(1, "ether")})`
+- List the Pending Transcation：`eth.pendingTransactions`
+- View the Transcation：`eth.getTransaction(tranId)`
 
 Contract:
-initialize deployed contract : `eth.contract(abi).at(contractAddress)`
-Deploy contract: `eth.contract(abi).new(input_params)`;
+- initialize deployed contract : `eth.contract(abi).at(contractAddress)`
+- Deploy contract: `eth.contract(abi).new(input_params)`;
 
 需要注意：
 执行合约方法时，需要指定eth.defaultAccount: `web3.eth.defaultAccount=eth.accounts[0]`;否则会报错：Error: invalid address
-
-
 
 
 ### Ether币的基本单位
@@ -120,9 +116,6 @@ ether (1000 finney)
 即，1 ether = 1000000000000000000 Wei
 
 ether 和 Wei转换：`web3.fromWei(10000000000000000)`, `web3.toWei(0.01)`
-
-### 
-
 
 
   [1]: https://github.com/ethereum/go-ethereum/wiki/Management-APIs
