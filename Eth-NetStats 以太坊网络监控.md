@@ -79,7 +79,7 @@ Netstats功能可生成两个版本：完整版本和轻量级版本。为了构
 
 ## 可能的安装问题
 ### Node & NPM 版本问题
-实践中发现node版本为0.10.25，npm版本为1.3.10；安装eth-netstats后运行`PORT=3000 WS_SECRET={WS_SECRET} npm start`失败，报错：
+1，实践中发现node版本为0.10.25，npm版本为1.3.10；安装eth-netstats后运行`PORT=3000 WS_SECRET={WS_SECRET} npm start`失败，报错：
 
     SyntaxError: Use of const in strict mode
 
@@ -89,7 +89,14 @@ Netstats功能可生成两个版本：完整版本和轻量级版本。为了构
     sudo npm install -g n  // 安装n工具，专门用来管理node.js版本的
     sudo n stable          // 安装stable版本
 
+2，NPM SSL问题
+通过npm install 命令安装第三方库时，可能会出现以下错误：
+`npm http GET https://registry.npmjs.org/n
+npm ERR! Error: CERT_UNTRUSTED`
+证书问题，可临时设置：`npm config set strict-ssl false`解决该问题。可参考[ssl-error-cert-untrusted-while-using-npm-command][4]。
+
 
   [1]: https://github.com/cubedro/eth-net-intelligence-api
   [2]: https://github.com/cubedro/eth-netstats
   [3]: http://mmbiz.qpic.cn/mmbiz/0UraoBrX9mlFlCsiaWs30kxdV5mYeicATaiaHWKcJvib9u62zHCAaKoHZRoRxkLkthL9ApCNrqicbhMgNp0XlcYhbKg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1
+  [4]: https://stackoverflow.com/questions/21855035/ssl-error-cert-untrusted-while-using-npm-command
